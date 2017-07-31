@@ -4,8 +4,8 @@ function getAndPrintHTML (options) {
 
   var requestOptions = {
 
-    host: options,
-    path: options
+    host: options.host,
+    path: options.path
 
   };
 
@@ -14,13 +14,15 @@ function getAndPrintHTML (options) {
 
   https.get(requestOptions, function (response) {
 
+    var newLine = "";
+
     response.setEncoding('utf8');
 
     response.on('data', function (data) {
 
-      var newLine = "\n";
+      newLine += data;
 
-      console.log(data + newLine);
+      //console.log(newLine);
 
       console.log('Chunk Received. Length:', data.length);
 
@@ -28,7 +30,7 @@ function getAndPrintHTML (options) {
 
     response.on('end', function() {
 
-      console.log('Response stream complete.');
+      console.log(newLine);
 
     });
 
@@ -43,4 +45,4 @@ var requestOptions = {
   };
 
 
-getAndPrintHTML("www.google.com");
+getAndPrintHTML(requestOptions);
